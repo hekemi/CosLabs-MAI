@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Новый заказ</title>
+  <style>
+    .stock-ok { color: green; }
+    .stock-bad { color: red; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Новый заказ</h1>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" id="order-form">
+    {% csrf_token %}
+
+    <label>Клиент:
+      <select name="client" id="client-select">
+        {% for c in clients %}
+          <option value="{{ c.id }}"
+                  data-credit-limit="{{ c.credit_limit }}"
+                  data-current-debt="{{ c.current_debt }}">
+            {{ c.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <p>
+      Тип оплаты:
+      <label><input type="radio" name="payment_type" value="cash" checked> Наличный</label>
+      <label><input type="radio" name="payment_type" value="noncash"> Безналичный</label>
+      <label><input type="radio" name="payment_type" value="credit"> Кредит</label>
+      <label><input type="radio" name="payment_type" value="barter"> Бартер</label>
+      <label><input type="radio" name="payment_type" value="offset"> Взаимозачет</label>
+    </p>
+
+    <table id="order-items" border="1">
+      <thead>
+        <tr>
+          <th>Товар</th>
+          <th>Цена</th>
+          <th>Остаток</th>
+          <th>Количество</th>
+          <th>Сумма</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-index="0">
+          <td>
+            <select name="item-0-product" class="product-select">
+              <option value="">--выберите--</option>
+              {% for p in products %}
+                <option value="{{ p.id }}" data-price="{{ p.price }}" data-stock="{{ p.stock_qty }}">
+                  {{ p.name }}
+                </option>
+              {% endfor %}
+            </select>
+          </td>
+          <td><span class="price">0.00</span></td>
+          <td><span class="stock">0.00</span></td>
+          <td><input type="number" name="item-0-qty" class="qty" min="0" value="0"></td>
+          <td><span class="line-total">0.00</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Итого: <span id="order-total">0.00</span></p>
+
+    <button type="submit">Добавить</button>
+  </form>
+
+  <audio id="beep">
+    <source src="/static/beep.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function recalcRow(row) {
+      const select = row.querySelector(".product-select");
+      const priceSpan = row.querySelector(".price");
+      const stockSpan = row.querySelector(".stock");
+      const qtyInput = row.querySelector(".qty");
+      const lineTotalSpan = row.querySelector(".line-total");
+
+      const option = select.options[select.selectedIndex];
+      const price = parseFloat(option.dataset.price || 0);
+      const stock = parseFloat(option.dataset.stock || 0);
+      const qty = parseFloat(qtyInput.value || 0);
+
+      priceSpan.textContent = price.toFixed(2);
+      stockSpan.textContent = stock.toFixed(2);
+
+      const lineTotal = price * qty;
+      lineTotalSpan.textContent = lineTotal.toFixed(2);
+
+      stockSpan.classList.remove("stock-ok", "stock-bad");
+      if (qty <= stock) {
+        stockSpan.classList.add("stock-ok");
+      } else if (qty > 0) {
+        stockSpan.classList.add("stock-bad");
+        const beep = document.getElementById("beep");
+        if (beep) beep.play();
+      }
+
+      recalcOrderTotal();
+    }
+
+    function recalcOrderTotal() {
+      let total = 0;
+      document.querySelectorAll("#order-items tbody tr").forEach((row) => {
+        const val = parseFloat(row.querySelector(".line-total").textContent || 0);
+        total += val;
+      });
+      document.getElementById("order-total").textContent = total.toFixed(2);
+    }
+
+    document.querySelectorAll("#order-items tbody tr").forEach((row) => {
+      row.querySelector(".product-select").addEventListener("change", () => recalcRow(row));
+      row.querySelector(".qty").addEventListener("input", () => recalcRow(row));
+    });
+
+    document.getElementById("order-form").addEventListener("submit", function (e) {
+      let hasError = false;
+      document.querySelectorAll("#order-items tbody tr").forEach((row) => {
+        const select = row.querySelector(".product-select");
+        const qty = parseFloat(row.querySelector(".qty").value || 0);
+        const price = parseFloat(row.querySelector(".price").textContent || 0);
+        if (!select.value || qty === 0 || price === 0) {
+          hasError = true;
+        }
+      });
+      if (hasError) {
+        e.preventDefault();
+        alert("Есть строки с незаполненным товаром, нулевой ценой или количеством.");
+      }
+    });
+
+    function getSelectedClientData() {
+      const select = document.getElementById("client-select");
+      const option = select.options[select.selectedIndex];
+      const creditLimit = parseFloat(option.dataset.creditLimit || 0);
+      const currentDebt = parseFloat(option.dataset.currentDebt || 0);
+      return { creditLimit, currentDebt };
+    }
+
+    function updateClientInfoDisplay() {
+      const { creditLimit, currentDebt } = getSelectedClientData();
+      const clSpan = document.getElementById("credit_limit_display");
+      const cdSpan = document.getElementById("current_debt_display");
+      if (clSpan) clSpan.textContent = creditLimit.toFixed(2);
+      if (cdSpan) cdSpan.textContent = currentDebt.toFixed(2);
+    }
+
+    // уже есть
+    function recalcOrderTotal() {
+      let total = 0;
+      document.querySelectorAll("#order-items tbody tr").forEach((row) => {
+        const val = parseFloat(row.querySelector(".line-total").textContent || 0);
+        total += val;
+      });
+      document.getElementById("order-total").textContent = total.toFixed(2);
+
+      checkCreditWarning(total);
+    }
+
+    function checkCreditWarning(orderTotal) {
+      const paymentTypeInput = document.querySelector('input[name="payment_type"]:checked');
+      if (!paymentTypeInput) return;
+      const paymentType = paymentTypeInput.value;
+
+      if (paymentType !== "credit") {
+        clearCreditHighlight();
+        return;
+      }
+
+      const { creditLimit, currentDebt } = getSelectedClientData();
+      if (!creditLimit) {
+        clearCreditHighlight();
+        return;
+      }
+
+      const newDebt = currentDebt + orderTotal;
+      const threshold = creditLimit * 0.9;
+
+      const debtSpan = document.getElementById("current_debt_display");
+      const limitSpan = document.getElementById("credit_limit_display");
+
+      if (newDebt >= threshold) {
+        if (debtSpan) debtSpan.style.color = "red";
+        if (limitSpan) limitSpan.style.color = "red";
+        // всплывающее предупреждение
+        alert("Внимание: текущий долг с учетом этого заказа приближается к 90% кредитного лимита!");
+      } else {
+        clearCreditHighlight();
+      }
+    }
+
+    function clearCreditHighlight() {
+      const debtSpan = document.getElementById("current_debt_display");
+      const limitSpan = document.getElementById("credit_limit_display");
+      if (debtSpan) debtSpan.style.color = "";
+      if (limitSpan) limitSpan.style.color = "";
+    }
+
+    // обновлять инфо при смене клиента и типа оплаты
+    document.getElementById("client-select").addEventListener("change", () => {
+      updateClientInfoDisplay();
+      recalcOrderTotal();
+    });
+
+    document.querySelectorAll('input[name="payment_type"]').forEach((radio) => {
+      radio.addEventListener("change", () => {
+        const total = parseFloat(document.getElementById("order-total").textContent || 0);
+        checkCreditWarning(total);
+      });
+    });
+
+    // инициализация при загрузке
+    updateClientInfoDisplay();
+
+  </script>
+  <p>
+    <a href="{% url 'home' %}"><button type="button">Назад</button></a>
+  </p>
+</body>
+</html>
+
+</body>
+</html>

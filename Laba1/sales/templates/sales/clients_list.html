@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>База клиентов</title>
+</head>
+<body>
+  <h1>База клиентов</h1>
+
+  <table border="1">
+    <tr>
+      <th>Имя</th>
+      <th>Общий счет покупок</th>
+      <th>Текущий счет</th>
+      <th>Потолок кредита</th>
+      <th>Текущий долг</th>
+      <th>Остаток кредита</th>
+      <th>Комментарий</th>
+    </tr>
+    {% for c in clients %}
+    <tr>
+      <td>{{ c.name }}</td>
+      <td>{{ c.total_purchases }}</td>
+      <td>{{ c.current_balance }}</td>
+      <td>{{ c.credit_limit }}</td>
+      <td>{{ c.current_debt }}</td>
+      <td>{{ c.credit_remaining }}</td>
+      <td>{{ c.comment }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="7">Клиентов пока нет</td></tr>
+    {% endfor %}
+  </table>
+
+  <p>
+    <a href="{% url 'home' %}"><button type="button">Назад</button></a>
+  </p>
+</body>
+</html>

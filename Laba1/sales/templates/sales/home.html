@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>АРМ оператора продаж</title>
+</head>
+<body>
+  <h1>АРМ оператора продаж</h1>
+
+  <p>
+    <a href="{% url 'clients_list' %}">
+      <button>Открыть базу клиентов</button>
+    </a>
+  </p>
+  <p>
+    <a href="{% url 'clients_orders_report' %}">
+      <button>Открыть базу заказов</button>
+    </a>
+  </p>
+
+  <p>
+    <a href="{% url 'products_list' %}">
+      <button>Открыть базу товаров</button>
+    </a>
+  </p>
+
+  <p>
+    <a href="{% url 'order_create' %}">
+      <button>Создать новый заказ</button>
+    </a>
+  </p>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Клиенты и их заказы</title>
+</head>
+<body>
+  <h1>Клиенты и их заказы</h1>
+
+  <table border="1">
+    <tr>
+      <th>Имя клиента</th>
+      <th>Сумма всех заказов</th>
+      <th>Количество заказов</th>
+      <th>Все товары (названия)</th>
+    </tr>
+
+    {% if clients_data %}
+      {% for row in clients_data %}
+      <tr>
+        <td>{{ row.client.name }}</td>
+        <td>{{ row.total_orders_sum }}</td>
+        <td>{{ row.orders_count }}</td>
+        <td>{{ row.product_names }}</td>
+      </tr>
+      {% endfor %}
+    {% else %}
+      <tr>
+        <td colspan="4">Клиентов нет</td>
+      </tr>
+    {% endif %}
+  </table>
+
+  <p>
+    <a href="{% url 'home' %}">
+      <button type="button">Назад</button>
+    </a>
+  </p>
+</body>
+</html>

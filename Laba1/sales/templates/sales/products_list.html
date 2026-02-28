@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>База товаров</title>
+</head>
+<body>
+  <h1>База товаров</h1>
+  <p>
+    <a href="{% url 'product_create' %}">
+      <button type="button">Добавить товар</button>
+    </a>
+  </p>
+
+  <table border="1">
+    <tr>
+      <th>Название</th>
+      <th>Цена</th>
+      <th>Количество на складе</th>
+    </tr>
+    {% for p in products %}
+    <tr>
+      <td>{{ p.name }}</td>
+      <td>{{ p.price }}</td>
+      <td>{{ p.stock_qty }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">Товаров пока нет</td></tr>
+    {% endfor %}
+  </table>
+
+  <p>
+    <a href="{% url 'home' %}"><button type="button">Назад</button></a>
+  </p>
+</body>
+</html>
