@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Бартер</title>
+</head>
+<body>
+  <h1>Создать бартер</h1>
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+
+  {% if give_total and receive_total %}
+    <p>Стоимость отдаваемых: {{ give_total }}, получаемых: {{ receive_total }}</p>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <p>
+      <label>Клиент:
+        <select name="client">
+          {% for c in clients %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </p>
+
+    <fieldset>
+      <legend>Товары, которые ОТДАЁМ</legend>
+      <p>
+        <label>Товар:
+          <select name="give_product">
+            {% for p in products %}
+              <option value="{{ p.id }}">{{ p.name }} (остаток: {{ p.stock_qty }}, цена: {{ p.price }})</option>
+            {% endfor %}
+          </select>
+        </label>
+      </p>
+      <p>
+        <label>Количество:
+          <input type="number" name="give_qty" step="1" min="1" value="1">
+        </label>
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>Товары, которые ПОЛУЧАЕМ</legend>
+      <p>
+        <label>Товар:
+          <select name="receive_product">
+            {% for p in products %}
+              <option value="{{ p.id }}">{{ p.name }} (остаток: {{ p.stock_qty }}, цена: {{ p.price }})</option>
+            {% endfor %}
+          </select>
+        </label>
+      </p>
+      <p>
+        <label>Количество:
+          <input type="number" name="receive_qty" step="1" min="1" value="1">
+        </label>
+      </p>
+    </fieldset>
+
+    <p>
+      <button type="submit">Сохранить бартер</button>
+    </p>
+
+    <p>
+      <a href="{% url 'home' %}">
+        <button type="button">Назад</button>
+      </a>
+    </p>
+  </form>
+</body>
+</html>

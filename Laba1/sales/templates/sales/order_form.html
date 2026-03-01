@@ -36,8 +36,12 @@
       <label><input type="radio" name="payment_type" value="cash" checked> Наличный</label>
       <label><input type="radio" name="payment_type" value="noncash"> Безналичный</label>
       <label><input type="radio" name="payment_type" value="credit"> Кредит</label>
-      <label><input type="radio" name="payment_type" value="barter"> Бартер</label>
       <label><input type="radio" name="payment_type" value="offset"> Взаимозачет</label>
+    </p>
+    <p>
+      <a href="{% url 'barter_create' %}">
+        <button type="button">Создать бартерную сделку</button>
+      </a>
     </p>
 
     <table id="order-items" border="1">

@@ -127,7 +127,6 @@ def order_create(request):
                 product.stock_qty -= qty
             elif payment_type == "offset":
                 product.stock_qty += qty
-            # barter тут можно доработать
             product.save()
 
         order.total_amount = total
@@ -151,11 +150,107 @@ def order_create(request):
             client.current_debt -= total
             if client.current_debt < 0:
                 client.current_debt = 0
-
         client.save()
         return redirect("order_create")
 
     return render(request, "sales/order_form.html", {
+        "clients": clients,
+        "products": products,
+    })
+
+@transaction.atomic
+def barter_create(request):
+    clients = Client.objects.all()
+    products = Product.objects.all()
+
+    if request.method == "POST":
+        client_id = request.POST.get("client")
+        client = Client.objects.select_for_update().get(pk=client_id)
+
+        # товары, которые ОТДАЁМ
+        give_product_id = request.POST.get("give_product")
+        give_qty_str = request.POST.get("give_qty")
+
+        # товары, которые ПОЛУЧАЕМ
+        receive_product_id = request.POST.get("receive_product")
+        receive_qty_str = request.POST.get("receive_qty")
+
+        if not (give_product_id and receive_product_id and give_qty_str and receive_qty_str):
+            return render(request, "sales/barter_form.html", {
+                "clients": clients,
+                "products": products,
+                "error": "Заполните оба товара и их количество.",
+            })
+
+        give_product = Product.objects.select_for_update().get(pk=give_product_id)
+        receive_product = Product.objects.select_for_update().get(pk=receive_product_id)
+
+        give_qty = Decimal(give_qty_str or "0")
+        receive_qty = Decimal(receive_qty_str or "0")
+
+        if give_qty <= 0 or receive_qty <= 0:
+            return render(request, "sales/barter_form.html", {
+                "clients": clients,
+                "products": products,
+                "error": "Количество товаров должно быть больше 0.",
+            })
+
+        # проверка склада: можем ли отдать
+        if give_qty > give_product.stock_qty:
+            return render(request, "sales/barter_form.html", {
+                "clients": clients,
+                "products": products,
+                "error": f"Недостаточно товара «{give_product.name}» на складе для бартера.",
+            })
+
+        # стоимость отдаем / получаем
+        give_total = give_product.price * give_qty
+        receive_total = receive_product.price * receive_qty
+
+        if give_total != receive_total:
+            return render(request, "sales/barter_form.html", {
+                "clients": clients,
+                "products": products,
+                "error": "Стоимость отдаваемых и получаемых товаров должна совпадать.",
+                "give_total": give_total,
+                "receive_total": receive_total,
+            })
+
+        # создаем заказ с типом "barter"
+        order = Order.objects.create(
+            client=client,
+            payment_type="barter",
+            total_amount=give_total,  # можно хранить сумму бартерной сделки
+        )
+
+        # позиция: что отдаем (кол-во отрицательное для наглядности)
+        OrderItem.objects.create(
+            order=order,
+            product=give_product,
+            quantity=-give_qty,
+            price=give_product.price,
+            line_total=-give_total,
+        )
+
+        # позиция: что получаем
+        OrderItem.objects.create(
+            order=order,
+            product=receive_product,
+            quantity=receive_qty,
+            price=receive_product.price,
+            line_total=receive_total,
+        )
+
+        # обновление склада
+        give_product.stock_qty -= give_qty
+        receive_product.stock_qty += receive_qty
+        give_product.save()
+        receive_product.save()
+
+        # счета клиента при бартере не меняем
+        return redirect("home")
+
+    return render(request, "sales/barter_form.html", {
         "clients": clients,
         "products": products,
     })
