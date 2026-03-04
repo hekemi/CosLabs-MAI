@@ -2,15 +2,3 @@
 *.log
 *.pyc
 __pycache__/
-
-# Virtual env
-env/
-venv/
-.venv/
-**/env/
-**/venv/
-**/.venv/
-
-# IDE
-.vscode/
-.idea/
