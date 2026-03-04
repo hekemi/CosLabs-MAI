@@ -23,7 +23,7 @@ header h1 {
 
 button,
 .btn {
-    background-color: #2563eb;
+    background-color: #b700ff;
     border: none;
     color: #f9fafb;
     padding: 8px 14px;
@@ -34,7 +34,7 @@ button,
 
 button:hover,
 .btn:hover {
-    background-color: #1d4ed8;
+    background-color: #b700ff;
 }
 
 table {
