@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>АРМ оператора продаж</title>
-</head>
-<body>
-  <h1>АРМ оператора продаж</h1>
-
+{% extends 'base.html' %}
+{% block content %}
   <p>
     <a href="{% url 'clients_list' %}">
       <button>Открыть базу клиентов</button>
@@ -29,5 +22,5 @@
       <button>Создать новый заказ</button>
     </a>
   </p>
-</body>
-</html>
+{% endblock %}
+

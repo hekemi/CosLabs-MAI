@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Новый заказ</title>
-  <style>
-    .stock-ok { color: green; }
-    .stock-bad { color: red; }
-    .error { color: red; }
-  </style>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
   <h1>Новый заказ</h1>
 
   {% if error %}
@@ -231,8 +221,4 @@
   <p>
     <a href="{% url 'home' %}"><button type="button">Назад</button></a>
   </p>
-</body>
-</html>
-
-</body>
-</html>
+{% endblock %}

@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Добавить товар</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
   <h1>Добавить товар</h1>
 
   <form method="post">
@@ -18,5 +13,4 @@
       <button type="button">Назад к базе товаров</button>
     </a>
   </p>
-</body>
-</html>
+{% endblock %}

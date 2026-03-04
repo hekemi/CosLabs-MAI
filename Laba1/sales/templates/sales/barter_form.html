@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>Бартер</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
   <h1>Создать бартер</h1>
 
   {% if error %}
@@ -74,5 +69,4 @@
       </a>
     </p>
   </form>
-</body>
-</html>
+{% endblock %}

@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <title>База клиентов</title>
-</head>
-<body>
-  <h1>База клиентов</h1>
+{% extends 'base.html' %}
 
-  <table border="1">
+{% block title %}База клиентов{% endblock %}
+
+{% block content %}
+  <h2>База клиентов</h2>
+
+  <table>
     <tr>
       <th>Имя</th>
       <th>Общий счет покупок</th>
@@ -32,8 +30,5 @@
     {% endfor %}
   </table>
 
-  <p>
-    <a href="{% url 'home' %}"><button type="button">Назад</button></a>
-  </p>
-</body>
-</html>
+  <p><a href="{% url 'home' %}" class="btn">Назад</a></p>
+{% endblock %}
