@@ -10,7 +10,6 @@ from django.db.models.functions import Coalesce
 CREDIT_WARNING_THRESHOLD = Decimal("0.9")
 
 def home(request):
-    # просто страница с 3 кнопками
     return render(request, "sales/home.html")
 
 
@@ -132,7 +131,7 @@ def order_create(request):
         order.total_amount = total
         order.save()
 
-        # логика по типам оплаты (упрощенно)
+        # логика по типам оплаты
         if payment_type == "cash":
             client.total_purchases += total
         elif payment_type == "noncash":
