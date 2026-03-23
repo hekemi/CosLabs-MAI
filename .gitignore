@@ -2,4 +2,4 @@
 *.log
 *.pyc
 __pycache__/
-random_values.json
+Laba2/random_values.json
