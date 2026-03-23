@@ -1,11 +1,11 @@
 {% load static %}
 
-<audio id="warningSound" preload="auto">
-  <source src="{% static 'sounds/tf2_crit.mp3' %}" type="audio/mpeg">
+<audio id="warnSound" preload="auto">
+  <source src="{% static 'sounds/tf2_warn.mp3' %}" type="audio/mpeg">
 </audio>
 
 <audio id="alarmSound" preload="auto">
-  <source src="{% static 'sounds/tf2_warn.mp3' %}" type="audio/mpeg">
+  <source src="{% static 'sounds/tf2_crit.mp3' %}" type="audio/mpeg">
 </audio>
 
 <!doctype html>
@@ -87,37 +87,20 @@
   </main>
 
   <script>
-    (function() {
+    (function () {
       const status = "{{ status }}";
-      if (status === "warn" || status === "alarm") {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = status === "alarm" ? "square" : "triangle";
-        osc.frequency.value = status === "alarm" ? 220 : 740;
-        gain.gain.value = 0.05;
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        setTimeout(() => osc.stop(), status === "alarm" ? 350 : 180);
+
+      function play(id) {
+        const audio = document.getElementById(id);
+        if (!audio) return;
+        audio.pause();
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
       }
+
+      if (status === "warn") play("warnSound");
+      if (status === "alarm") play("alarmSound");
     })();
-  </script>
-
-  <script>
-    function playWarningSound() {
-      const audio = document.getElementById('warningSound');
-      if (!audio) return;
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    }
-
-    function playAlarmSound() {
-      const audio = document.getElementById('alarmSound');
-      if (!audio) return;
-      audio.currentTime = 0;
-      audio.play().catch(() => {});
-    }
   </script>
 </body>
 </html>
