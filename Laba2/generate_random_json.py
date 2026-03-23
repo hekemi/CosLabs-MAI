@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def main() -> None:
-    values = [random.randint(0, 1000) for _ in range(10)]
+    values = [random.randint(0, 10) for _ in range(10)]
     output_path = Path(__file__).parent / "random_values.json"
 
     with output_path.open("w", encoding="utf-8") as f:
