@@ -1,4 +1,13 @@
 {% load static %}
+
+<audio id="warningSound" preload="auto">
+  <source src="{% static 'sounds/tf2_crit.mp3' %}" type="audio/mpeg">
+</audio>
+
+<audio id="alarmSound" preload="auto">
+  <source src="{% static 'sounds/tf2_warn.mp3' %}" type="audio/mpeg">
+</audio>
+
 <!doctype html>
 <html lang="ru">
 <head>
@@ -93,6 +102,22 @@
         setTimeout(() => osc.stop(), status === "alarm" ? 350 : 180);
       }
     })();
+  </script>
+
+  <script>
+    function playWarningSound() {
+      const audio = document.getElementById('warningSound');
+      if (!audio) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
+
+    function playAlarmSound() {
+      const audio = document.getElementById('alarmSound');
+      if (!audio) return;
+      audio.currentTime = 0;
+      audio.play().catch(() => {});
+    }
   </script>
 </body>
 </html>
