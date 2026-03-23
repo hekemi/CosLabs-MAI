@@ -116,8 +116,8 @@ def dashboard(request):
     n2 = float(request.GET.get("n2", 15))
     n2 = max(5, min(40, n2))
 
-    lower = float(request.GET.get("lower", 10))
-    upper = float(request.GET.get("upper", 90))
+    lower = float(request.GET.get("lower", 1))
+    upper = float(request.GET.get("upper", 9))
 
     filter_type = request.GET.get("filter_type", "gt")
     filter_value = float(request.GET.get("filter_value", 0))
