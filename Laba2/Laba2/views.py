@@ -120,7 +120,7 @@ def dashboard(request):
     upper = float(request.GET.get("upper", 90))
 
     filter_type = request.GET.get("filter_type", "gt")
-    filter_value = float(request.GET.get("filter_value", 50))
+    filter_value = float(request.GET.get("filter_value", 0))
 
     action = request.GET.get("action", "")
 
