@@ -1,88 +1,83 @@
+{% load static %}
 <!doctype html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>АРМ контроля параметра</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
   {% if running %}
     <meta http-equiv="refresh" content="1">
   {% endif %}
-  <style>
-    body { font-family: Arial, sans-serif; margin: 16px; background: #f6f8fb; }
-    .grid { display: grid; grid-template-columns: 360px 1fr; gap: 16px; }
-    .card { background: white; padding: 12px; border-radius: 10px; box-shadow: 0 1px 6px rgba(0,0,0,.1); margin-bottom: 12px; }
-    .status.ok { color: #1f7a1f; font-weight: 700; }
-    .status.warn { color: #b36b00; font-weight: 700; }
-    .status.alarm { color: #b30000; font-weight: 700; }
-    input, select, button { width: 100%; margin: 4px 0 8px; padding: 6px; }
-    img { max-width: 100%; display: block; margin-bottom: 12px; border-radius: 8px; }
-  </style>
 </head>
 <body>
-  <h2>АРМ специалиста по контролю и анализу параметра</h2>
+  <header>
+    <h2>АРМ специалиста по контролю и анализу параметра</h2>
+  </header>
 
-  <div class="grid">
-    <div>
-      <div class="card">
-        <form method="get">
-          <label>N1 (2..10)</label>
-          <input type="number" name="n1" min="2" max="10" value="{{ n1 }}">
+  <main class="main">
+    <div class="grid">
+      <div>
+        <div class="card">
+          <form method="get">
+            <label>N1 (2..10)</label>
+            <input type="number" name="n1" min="2" max="10" value="{{ n1 }}">
 
-          <label>N2 (5..40, %)</label>
-          <input type="number" name="n2" min="5" max="40" value="{{ n2 }}">
+            <label>N2 (5..40, %)</label>
+            <input type="number" name="n2" min="5" max="40" value="{{ n2 }}">
 
-          <label>Нижняя граница</label>
-          <input type="number" step="any" name="lower" value="{{ lower }}">
+            <label>Нижняя граница</label>
+            <input type="number" step="any" name="lower" value="{{ lower }}">
 
-          <label>Верхняя граница</label>
-          <input type="number" step="any" name="upper" value="{{ upper }}">
+            <label>Верхняя граница</label>
+            <input type="number" step="any" name="upper" value="{{ upper }}">
 
-          <label>Фильтр</label>
-          <select name="filter_type">
-            <option value="gt" {% if filter_type == "gt" %}selected{% endif %}>Больше границы</option>
-            <option value="lt" {% if filter_type == "lt" %}selected{% endif %}>Меньше границы</option>
-            <option value="multiple" {% if filter_type == "multiple" %}selected{% endif %}>Кратно значению</option>
-          </select>
+            <label>Фильтр</label>
+            <select name="filter_type">
+              <option value="gt" {% if filter_type == "gt" %}selected{% endif %}>Больше границы</option>
+              <option value="lt" {% if filter_type == "lt" %}selected{% endif %}>Меньше границы</option>
+              <option value="multiple" {% if filter_type == "multiple" %}selected{% endif %}>Кратно значению</option>
+            </select>
 
-          <label>Параметр фильтра</label>
-          <input type="number" step="any" name="filter_value" value="{{ filter_value }}">
+            <label>Параметр фильтра</label>
+            <input type="number" step="any" name="filter_value" value="{{ filter_value|default:0 }}">
 
-          <button name="action" value="start">Старт</button>
-          <button name="action" value="stop">Стоп</button>
-          <button name="action" value="next">Следующее значение</button>
-          <button name="action" value="reset">Сброс</button>
-        </form>
+            <button name="action" value="start">Старт</button>
+            <button name="action" value="stop">Стоп</button>
+            <button name="action" value="next">Следующее значение</button>
+            <button name="action" value="reset">Сброс</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <p>Текущее значение: <b>{% if current is not None %}{{ current|floatformat:3 }}{% else %}—{% endif %}</b></p>
+          <p>Предыдущие N1:</p>
+          <ul>
+            {% for v in prev_values %}
+              <li>{{ v|floatformat:3 }}</li>
+            {% empty %}
+              <li>—</li>
+            {% endfor %}
+          </ul>
+          <p>Среднее выборки: <b>{% if selected_mean is not None %}{{ selected_mean|floatformat:3 }}{% else %}—{% endif %}</b></p>
+          <p class="status {{ status }}">{{ status_text }}</p>
+        </div>
       </div>
 
-      <div class="card">
-        <p>Текущее значение: <b>{% if current is not None %}{{ current|floatformat:3 }}{% else %}—{% endif %}</b></p>
-        <p>Предыдущие N1:</p>
-        <ul>
-          {% for v in prev_values %}
-            <li>{{ v|floatformat:3 }}</li>
-          {% empty %}
-            <li>—</li>
-          {% endfor %}
-        </ul>
-        <p>Среднее выборки: <b>{% if selected_mean is not None %}{{ selected_mean|floatformat:3 }}{% else %}—{% endif %}</b></p>
-        <p class="status {{ status }}">{{ status_text }}</p>
+      <div>
+        <div class="card">
+          <img class="chart-img" src="data:image/png;base64,{{ all_chart }}" alt="all_chart">
+        </div>
+        <div class="card">
+          <img class="chart-img" src="data:image/png;base64,{{ selected_line_chart }}" alt="selected_line_chart">
+        </div>
+        <div class="card">
+          <img class="chart-img" src="data:image/png;base64,{{ selected_bar_chart }}" alt="selected_bar_chart">
+        </div>
       </div>
     </div>
-
-    <div>
-      <div class="card">
-        <img src="data:image/png;base64,{{ all_chart }}" alt="all_chart">
-      </div>
-      <div class="card">
-        <img src="data:image/png;base64,{{ selected_line_chart }}" alt="selected_line_chart">
-      </div>
-      <div class="card">
-        <img src="data:image/png;base64,{{ selected_bar_chart }}" alt="selected_bar_chart">
-      </div>
-    </div>
-  </div>
+  </main>
 
   <script>
-    // Звуковая индикация
     (function() {
       const status = "{{ status }}";
       if (status === "warn" || status === "alarm") {
