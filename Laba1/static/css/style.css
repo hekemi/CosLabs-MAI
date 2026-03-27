@@ -19,6 +19,8 @@ header h1 {
 
 .main {
     padding: 24px;
+    margin: 0;
+    max-width: none;
 }
 
 button,
@@ -79,4 +81,9 @@ a:hover {
 
 .stock-bad {
     color: #f97373;
+}
+
+.container, .wrapper {
+    margin-left: 0 !important;
+    margin-right: auto !important;
 }
