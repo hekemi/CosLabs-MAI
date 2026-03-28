@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сотрудники</title>
+</head>
+<body>
+  <nav>
+    <a href="{% url 'employees:guest_list' %}">Гость</a> |
+    <a href="{% url 'employees:full_list' %}">Полный список</a> |
+    {% if user.is_authenticated %}
+      {{ user.username }} | <a href="{% url 'logout' %}">Выход</a>
+    {% else %}
+      <a href="{% url 'login' %}">Вход</a>
+    {% endif %}
+  </nav>
+  <hr>
+  {% block content %}{% endblock %}
+</body>
+</html>

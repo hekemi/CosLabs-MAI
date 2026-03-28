@@ -1,0 +1,9 @@
+{% extends "employees/base.html" %}
+{% block content %}
+<h2>Удаление</h2>
+<p>Удалить сотрудника: {{ employee }}?</p>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+</form>
+{% endblock %}

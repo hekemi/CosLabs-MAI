@@ -1,0 +1,33 @@
+{% extends "employees/base.html" %}
+{% block content %}
+<h2>Список сотрудников (полный)</h2>
+
+{% if perms.employees.add_employee %}
+  <p><a href="{% url 'employees:add' %}">Добавить сотрудника</a></p>
+{% endif %}
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Фамилия</th><th>Имя</th><th>Отчество</th><th>Должность</th><th>Адрес</th><th>Личный телефон</th><th>Рабочий телефон</th><th>Действия</th>
+  </tr>
+  {% for e in employees %}
+  <tr>
+    <td>{{ e.last_name }}</td>
+    <td>{{ e.first_name }}</td>
+    <td>{{ e.patronymic }}</td>
+    <td>{{ e.position }}</td>
+    <td>{{ e.address }}</td>
+    <td>{{ e.personal_phone }}</td>
+    <td>{{ e.work_phone }}</td>
+    <td>
+      {% if perms.employees.change_employee %}
+        <a href="{% url 'employees:edit' e.pk %}">Изменить</a>
+      {% endif %}
+      {% if perms.employees.delete_employee %}
+        | <a href="{% url 'employees:delete' e.pk %}">Удалить</a>
+      {% endif %}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
