@@ -1,20 +1,30 @@
+{% load static %}
 <!doctype html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <title>Сотрудники</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <nav>
-    <a href="{% url 'employees:guest_list' %}">Гость</a> |
-    <a href="{% url 'employees:full_list' %}">Полный список</a> |
-    {% if user.is_authenticated %}
-      {{ user.username }} | <a href="{% url 'logout' %}">Выход</a>
-    {% else %}
-      <a href="{% url 'login' %}">Вход</a>
-    {% endif %}
-  </nav>
-  <hr>
-  {% block content %}{% endblock %}
+  <header>
+    <h2>Сотрудники фирмы</h2>
+    <div class="nav-links">
+      <a href="{% url 'employees:guest_list' %}">Гость</a>
+      <a href="{% url 'employees:full_list' %}">Полный список</a>
+      {% if user.is_authenticated %}
+        <span>{{ user.username }}</span>
+        <a href="{% url 'logout' %}">Выход</a>
+      {% else %}
+        <a href="{% url 'login' %}">Вход</a>
+      {% endif %}
+    </div>
+  </header>
+
+  <main class="main">
+    <section class="card">
+      {% block content %}{% endblock %}
+    </section>
+  </main>
 </body>
 </html>
