@@ -10,3 +10,6 @@ Laba3/data/profit_chart.xlsx
 Laba2/db.sqlite3
 Laba2/random_values.json
 Laba2/db.sqlite3
+
+# Laba5 bot secrets
+Laba5/.env
