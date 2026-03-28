@@ -12,6 +12,10 @@
 import asyncio
 import logging
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).with_name(".env"))
 
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command, CommandStart
