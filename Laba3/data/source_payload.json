@@ -1,0 +1,513 @@
+{
+  "generated_at": "2026-03-28T08:10:16",
+  "schema": [
+    {
+      "code": "product_name",
+      "order": 1,
+      "name": "Наименование товара",
+      "type": "string",
+      "precision": 0,
+      "transmit": true
+    },
+    {
+      "code": "product_group",
+      "order": 2,
+      "name": "Группа товара",
+      "type": "string",
+      "precision": 0,
+      "transmit": true
+    },
+    {
+      "code": "sold_qty",
+      "order": 3,
+      "name": "Проданное количество",
+      "type": "number",
+      "precision": 0,
+      "transmit": true
+    },
+    {
+      "code": "sale_price",
+      "order": 4,
+      "name": "Продажная цена",
+      "type": "number",
+      "precision": 2,
+      "transmit": true
+    },
+    {
+      "code": "purchase_price",
+      "order": 5,
+      "name": "Закупочная цена",
+      "type": "number",
+      "precision": 2,
+      "transmit": true
+    },
+    {
+      "code": "discount",
+      "order": 6,
+      "name": "Скидка (%)",
+      "type": "number",
+      "precision": 2,
+      "transmit": true
+    },
+    {
+      "code": "sale_date",
+      "order": 7,
+      "name": "Дата продажи",
+      "type": "date",
+      "precision": 0,
+      "transmit": true
+    }
+  ],
+  "rows": [
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 15.0,
+      "sale_price": 283.18,
+      "purchase_price": 179.89,
+      "discount": 11.08,
+      "sale_date": "2026-03-23"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 10.0,
+      "sale_price": 123.77,
+      "purchase_price": 101.82,
+      "discount": 4.86,
+      "sale_date": "2026-03-24"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 16.0,
+      "sale_price": 85.63,
+      "purchase_price": 63.59,
+      "discount": 11.03,
+      "sale_date": "2026-03-20"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 20.0,
+      "sale_price": 94.12,
+      "purchase_price": 73.51,
+      "discount": 1.57,
+      "sale_date": "2026-03-08"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 12.0,
+      "sale_price": 179.35,
+      "purchase_price": 124.6,
+      "discount": 1.09,
+      "sale_date": "2026-03-15"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 4.0,
+      "sale_price": 78.65,
+      "purchase_price": 50.85,
+      "discount": 5.97,
+      "sale_date": "2026-03-13"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 10.0,
+      "sale_price": 146.21,
+      "purchase_price": 100.62,
+      "discount": 8.94,
+      "sale_date": "2026-03-20"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 18.0,
+      "sale_price": 99.72,
+      "purchase_price": 67.54,
+      "discount": 0.45,
+      "sale_date": "2026-03-10"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 14.0,
+      "sale_price": 228.07,
+      "purchase_price": 199.49,
+      "discount": 5.41,
+      "sale_date": "2026-03-26"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 13.0,
+      "sale_price": 182.9,
+      "purchase_price": 155.25,
+      "discount": 14.68,
+      "sale_date": "2026-03-22"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 11.0,
+      "sale_price": 32.27,
+      "purchase_price": 23.03,
+      "discount": 10.31,
+      "sale_date": "2026-03-11"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 17.0,
+      "sale_price": 97.86,
+      "purchase_price": 90.91,
+      "discount": 1.9,
+      "sale_date": "2026-03-04"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 7.0,
+      "sale_price": 135.85,
+      "purchase_price": 93.57,
+      "discount": 5.85,
+      "sale_date": "2026-03-25"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 7.0,
+      "sale_price": 54.72,
+      "purchase_price": 44.15,
+      "discount": 3.66,
+      "sale_date": "2026-03-26"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 8.0,
+      "sale_price": 244.63,
+      "purchase_price": 169.2,
+      "discount": 4.4,
+      "sale_date": "2026-03-24"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 1.0,
+      "sale_price": 116.61,
+      "purchase_price": 104.03,
+      "discount": 1.35,
+      "sale_date": "2026-03-03"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 3.0,
+      "sale_price": 220.32,
+      "purchase_price": 180.79,
+      "discount": 14.5,
+      "sale_date": "2026-03-20"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 3.0,
+      "sale_price": 217.55,
+      "purchase_price": 194.62,
+      "discount": 2.92,
+      "sale_date": "2026-03-11"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 13.0,
+      "sale_price": 186.18,
+      "purchase_price": 136.91,
+      "discount": 9.83,
+      "sale_date": "2026-03-05"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 2.0,
+      "sale_price": 209.63,
+      "purchase_price": 150.71,
+      "discount": 10.67,
+      "sale_date": "2026-03-08"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 5.0,
+      "sale_price": 185.85,
+      "purchase_price": 119.92,
+      "discount": 4.87,
+      "sale_date": "2026-03-21"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 7.0,
+      "sale_price": 124.73,
+      "purchase_price": 92.37,
+      "discount": 0.85,
+      "sale_date": "2026-03-01"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 3.0,
+      "sale_price": 64.05,
+      "purchase_price": 60.61,
+      "discount": 4.26,
+      "sale_date": "2026-03-10"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 15.0,
+      "sale_price": 64.24,
+      "purchase_price": 41.87,
+      "discount": 7.88,
+      "sale_date": "2026-03-21"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 9.0,
+      "sale_price": 241.65,
+      "purchase_price": 169.53,
+      "discount": 9.94,
+      "sale_date": "2026-03-05"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 11.0,
+      "sale_price": 27.43,
+      "purchase_price": 25.79,
+      "discount": 7.68,
+      "sale_date": "2026-03-14"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 20.0,
+      "sale_price": 135.44,
+      "purchase_price": 125.13,
+      "discount": 9.52,
+      "sale_date": "2026-03-15"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 13.0,
+      "sale_price": 84.76,
+      "purchase_price": 62.71,
+      "discount": 6.28,
+      "sale_date": "2026-03-13"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 1.0,
+      "sale_price": 83.11,
+      "purchase_price": 75.76,
+      "discount": 13.01,
+      "sale_date": "2026-03-08"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 16.0,
+      "sale_price": 143.23,
+      "purchase_price": 98.44,
+      "discount": 14.74,
+      "sale_date": "2026-03-21"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 18.0,
+      "sale_price": 101.78,
+      "purchase_price": 78.6,
+      "discount": 10.51,
+      "sale_date": "2026-03-01"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 13.0,
+      "sale_price": 270.46,
+      "purchase_price": 176.1,
+      "discount": 9.08,
+      "sale_date": "2026-02-28"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 10.0,
+      "sale_price": 169.15,
+      "purchase_price": 146.99,
+      "discount": 12.4,
+      "sale_date": "2026-03-21"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 19.0,
+      "sale_price": 95.28,
+      "purchase_price": 77.97,
+      "discount": 4.54,
+      "sale_date": "2026-03-18"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 14.0,
+      "sale_price": 72.29,
+      "purchase_price": 56.23,
+      "discount": 4.7,
+      "sale_date": "2026-03-16"
+    },
+    {
+      "product_name": "Молоко",
+      "product_group": "Продукты",
+      "sold_qty": 5.0,
+      "sale_price": 196.13,
+      "purchase_price": 145.23,
+      "discount": 13.2,
+      "sale_date": "2026-03-28"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 8.0,
+      "sale_price": 63.7,
+      "purchase_price": 57.39,
+      "discount": 1.07,
+      "sale_date": "2026-03-12"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 13.0,
+      "sale_price": 106.71,
+      "purchase_price": 76.2,
+      "discount": 5.49,
+      "sale_date": "2026-03-17"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 17.0,
+      "sale_price": 75.45,
+      "purchase_price": 47.77,
+      "discount": 11.69,
+      "sale_date": "2026-03-25"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 19.0,
+      "sale_price": 233.86,
+      "purchase_price": 196.42,
+      "discount": 7.59,
+      "sale_date": "2026-03-01"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 15.0,
+      "sale_price": 141.7,
+      "purchase_price": 101.88,
+      "discount": 6.72,
+      "sale_date": "2026-03-05"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 19.0,
+      "sale_price": 106.59,
+      "purchase_price": 89.79,
+      "discount": 10.25,
+      "sale_date": "2026-03-20"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 7.0,
+      "sale_price": 74.74,
+      "purchase_price": 51.2,
+      "discount": 3.59,
+      "sale_date": "2026-03-19"
+    },
+    {
+      "product_name": "Мыло",
+      "product_group": "Бытовая химия",
+      "sold_qty": 14.0,
+      "sale_price": 67.14,
+      "purchase_price": 46.44,
+      "discount": 14.21,
+      "sale_date": "2026-03-11"
+    },
+    {
+      "product_name": "Сок",
+      "product_group": "Напитки",
+      "sold_qty": 20.0,
+      "sale_price": 72.64,
+      "purchase_price": 48.18,
+      "discount": 11.89,
+      "sale_date": "2026-03-14"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 8.0,
+      "sale_price": 170.14,
+      "purchase_price": 119.05,
+      "discount": 7.2,
+      "sale_date": "2026-03-05"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 18.0,
+      "sale_price": 277.89,
+      "purchase_price": 190.82,
+      "discount": 13.2,
+      "sale_date": "2026-03-05"
+    },
+    {
+      "product_name": "Чай",
+      "product_group": "Напитки",
+      "sold_qty": 2.0,
+      "sale_price": 73.74,
+      "purchase_price": 69.01,
+      "discount": 4.25,
+      "sale_date": "2026-03-28"
+    },
+    {
+      "product_name": "Порошок",
+      "product_group": "Бытовая химия",
+      "sold_qty": 10.0,
+      "sale_price": 85.75,
+      "purchase_price": 70.01,
+      "discount": 11.23,
+      "sale_date": "2026-03-19"
+    },
+    {
+      "product_name": "Хлеб",
+      "product_group": "Продукты",
+      "sold_qty": 12.0,
+      "sale_price": 222.9,
+      "purchase_price": 197.47,
+      "discount": 11.93,
+      "sale_date": "2026-03-18"
+    }
+  ]
+}
