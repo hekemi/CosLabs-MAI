@@ -12,9 +12,13 @@
     <div class="nav-links">
       <a href="{% url 'employees:guest_list' %}">Гость</a>
       <a href="{% url 'employees:full_list' %}">Полный список</a>
+
       {% if user.is_authenticated %}
         <span>{{ user.username }}</span>
-        <a href="{% url 'logout' %}">Выход</a>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-link" style="width:auto; margin:0;">Выход</button>
+        </form>
       {% else %}
         <a href="{% url 'login' %}">Вход</a>
       {% endif %}
