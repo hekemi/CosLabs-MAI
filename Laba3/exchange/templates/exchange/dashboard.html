@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Лаба 3 — Демонстрация обмена данными</title>
+  <style>
+    body { font-family: Inter, Arial, sans-serif; margin: 0; background: #f6f7fb; color: #20242c; }
+    .wrap { max-width: 1150px; margin: 24px auto; padding: 0 16px; }
+    .title { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    .sub { color: #5f6470; margin-bottom: 20px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(12, 1fr); }
+    .card { grid-column: span 12; background: #fff; border: 1px solid #e7e9ef; border-radius: 12px; padding: 16px; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    h3 { margin: 0 0 12px; font-size: 16px; }
+    label { display: block; font-size: 13px; color: #5f6470; margin: 8px 0 4px; }
+    input, textarea { width: 100%; box-sizing: border-box; border: 1px solid #d8dce6; border-radius: 8px; padding: 10px; font-size: 14px; }
+    textarea { min-height: 220px; font-family: "JetBrains Mono", Consolas, monospace; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    button {
+      border: none; border-radius: 8px; padding: 10px 14px; cursor: pointer; font-weight: 600;
+      background: #2f66f6; color: white;
+    }
+    button.alt { background: #2b2f3a; }
+    .status { font-size: 13px; color: #5f6470; margin-top: 8px; }
+    .msg { padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; }
+    .success { background: #e8f7ec; color: #1d6b31; border: 1px solid #bfe7c8; }
+    .error { background: #fdeced; color: #8a1f2b; border: 1px solid #f6c5cb; }
+    .warning { background: #fff6e6; color: #8b6511; border: 1px solid #f3ddac; }
+    @media (max-width: 900px) { .col-6, .col-4 { grid-column: span 12; } .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="title">Демонстрация обмена данными (Источник → Сервер → Excel)</div>
+  <div class="sub">Вариант 6: прибыль по группам товаров</div>
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="msg {% if message.tags == 'error' %}error{% elif message.tags == 'warning' %}warning{% else %}success{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="grid">
+    <div class="card col-4">
+      <h3>Шаг 1. Источник</h3>
+      <form method="post">
+        {% csrf_token %}
+        <label>Количество случайных строк</label>
+        <input type="number" name="count" value="{{ count }}" min="1" />
+
+        <label>Выходной файл источника</label>
+        <input type="text" name="source_out" value="{{ source_out }}" />
+
+        <input type="hidden" name="source_in" value="{{ source_in }}" />
+        <input type="hidden" name="processed_out" value="{{ processed_out }}" />
+        <input type="hidden" name="processed_in" value="{{ processed_in }}" />
+        <input type="hidden" name="excel_out" value="{{ excel_out }}" />
+        <input type="hidden" name="schema_json" value="{{ schema_json|escape }}" />
+        <input type="hidden" name="rows_json" value="{{ rows_json|escape }}" />
+
+        <div class="btns">
+          <button name="action" value="generate_rows" type="submit">Сгенерировать строки</button>
+          <button class="alt" name="action" value="export_source" type="submit">Выгрузить источник</button>
+        </div>
+      </form>
+      <div class="status">Файл источника: {% if source_exists %}✅{% else %}❌{% endif %}</div>
+    </div>
+
+    <div class="card col-4">
+      <h3>Шаг 2. Сервер</h3>
+      <form method="post">
+        {% csrf_token %}
+        <label>Входной файл (source)</label>
+        <input type="text" name="source_in" value="{{ source_in }}" />
+
+        <label>Выходной файл (processed)</label>
+        <input type="text" name="processed_out" value="{{ processed_out }}" />
+
+        <input type="hidden" name="source_out" value="{{ source_out }}" />
+        <input type="hidden" name="processed_in" value="{{ processed_in }}" />
+        <input type="hidden" name="excel_out" value="{{ excel_out }}" />
+        <input type="hidden" name="schema_json" value="{{ schema_json|escape }}" />
+        <input type="hidden" name="rows_json" value="{{ rows_json|escape }}" />
+
+        <div class="btns">
+          <button name="action" value="process_server" type="submit">Обработать</button>
+        </div>
+      </form>
+      <div class="status">Файл обработки: {% if processed_exists %}✅{% else %}❌{% endif %}</div>
+    </div>
+
+    <div class="card col-4">
+      <h3>Шаг 3. Визуализатор</h3>
+      <form method="post">
+        {% csrf_token %}
+        <label>Входной файл (processed)</label>
+        <input type="text" name="processed_in" value="{{ processed_in }}" />
+
+        <label>Выходной Excel файл</label>
+        <input type="text" name="excel_out" value="{{ excel_out }}" />
+
+        <input type="hidden" name="source_out" value="{{ source_out }}" />
+        <input type="hidden" name="source_in" value="{{ source_in }}" />
+        <input type="hidden" name="processed_out" value="{{ processed_out }}" />
+        <input type="hidden" name="schema_json" value="{{ schema_json|escape }}" />
+        <input type="hidden" name="rows_json" value="{{ rows_json|escape }}" />
+
+        <div class="btns">
+          <button name="action" value="visualize" type="submit">Построить Excel</button>
+        </div>
+      </form>
+      <div class="status">Excel-файл: {% if excel_exists %}✅{% else %}❌{% endif %}</div>
+    </div>
+
+    <div class="card col-6">
+      <h3>Структура данных (JSON)</h3>
+      <form method="post">
+        {% csrf_token %}
+        <textarea name="schema_json">{{ schema_json }}</textarea>
+
+        <input type="hidden" name="rows_json" value="{{ rows_json|escape }}" />
+        <input type="hidden" name="source_out" value="{{ source_out }}" />
+        <input type="hidden" name="source_in" value="{{ source_in }}" />
+        <input type="hidden" name="processed_out" value="{{ processed_out }}" />
+        <input type="hidden" name="processed_in" value="{{ processed_in }}" />
+        <input type="hidden" name="excel_out" value="{{ excel_out }}" />
+
+        <div class="btns">
+          <button class="alt" name="action" value="export_source" type="submit">Сохранить как source</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card col-6">
+      <h3>Данные продаж (JSON)</h3>
+      <form method="post">
+        {% csrf_token %}
+        <textarea name="rows_json">{{ rows_json }}</textarea>
+
+        <div class="row">
+          <div>
+            <label>Source out</label>
+            <input type="text" name="source_out" value="{{ source_out }}" />
+          </div>
+          <div>
+            <label>Processed out</label>
+            <input type="text" name="processed_out" value="{{ processed_out }}" />
+          </div>
+        </div>
+        <label>Excel out</label>
+        <input type="text" name="excel_out" value="{{ excel_out }}" />
+
+        <input type="hidden" name="schema_json" value="{{ schema_json|escape }}" />
+        <input type="hidden" name="source_in" value="{{ source_in }}" />
+        <input type="hidden" name="processed_in" value="{{ processed_in }}" />
+
+        <div class="btns">
+          <button name="action" value="run_all" type="submit">Запустить полный цикл</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

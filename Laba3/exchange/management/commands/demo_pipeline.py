@@ -9,6 +9,7 @@ from exchange.services import (
     export_source_payload,
     process_profit_by_group,
 )
+from exchange.utils import generate_random_rows
 
 
 PRODUCTS = [
@@ -21,30 +22,6 @@ PRODUCTS = [
 ]
 
 
-def _random_rows(count: int) -> list[dict]:
-    rows = []
-    for _ in range(count):
-        name, group = random.choice(PRODUCTS)
-        qty = random.randint(1, 20)
-        purchase = round(random.uniform(20, 200), 2)
-        sale = round(purchase * random.uniform(1.05, 1.6), 2)
-        discount = round(random.uniform(0, 15), 2)
-        sale_date = (date.today() - timedelta(days=random.randint(0, 30))).isoformat()
-
-        rows.append(
-            {
-                "product_name": name,
-                "product_group": group,
-                "sold_qty": qty,
-                "sale_price": sale,
-                "purchase_price": purchase,
-                "discount": discount,
-                "sale_date": sale_date,
-            }
-        )
-    return rows
-
-
 class Command(BaseCommand):
     help = "Полная демонстрация: источник -> сервер -> визуализатор"
 
@@ -55,7 +32,7 @@ class Command(BaseCommand):
         parser.add_argument("--excel-out", default="data/profit_chart.xlsx")
 
     def handle(self, *args, **options):
-        rows = _random_rows(options["count"])
+        rows = generate_random_rows(options["count"])
         src = export_source_payload(DEFAULT_SCHEMA, rows, options["source_out"])
         processed = process_profit_by_group(src, options["processed_out"])
         xlsx = build_excel_visualization(processed, options["excel_out"])
