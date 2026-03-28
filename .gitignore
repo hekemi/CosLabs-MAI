@@ -4,3 +4,6 @@
 __pycache__/
 **/random_values.json
 Laba2/random_values.json
+Laba3/data/source_payload.json
+Laba3/data/processed_payload.json
+Laba3/data/profit_chart.xlsx
