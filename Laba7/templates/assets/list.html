@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Основные средства</h3>
+  <p>
+    <a class="btn-link" href="{% url 'assets_new' %}">+ Новое ОС</a>
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Заполнить внутренние коды автоматически</button>
+  </form>
+
+  <table>
+    <tr><th>ID</th><th>Наименование</th><th>Подразделение</th><th>Внутренний код</th></tr>
+    {% for a in assets %}
+      <tr>
+        <td>{{ a.id }}</td>
+        <td>{{ a.name }}</td>
+        <td>{{ a.storage_department }}</td>
+        <td>{{ a.internal_code }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">Нет данных</td></tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

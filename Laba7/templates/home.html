@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h3>Выберите раздел</h3>
+  <p><a class="btn-link" href="{% url 'assets_list' %}">Учет ОС</a></p>
+  <p><a class="btn-link" href="{% url 'counterparties_list' %}">Проверка ИНН контрагентов</a></p>
+</div>
+{% endblock %}

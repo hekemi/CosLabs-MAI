@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Laba7</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header>
+  <h2>Лаба 7 — модификация ИС</h2>
+  <div class="nav-links">
+    <a href="{% url 'home' %}">Главная</a>
+    <a href="{% url 'assets_list' %}">Основные средства</a>
+    <a href="{% url 'counterparties_list' %}">Контрагенты</a>
+  </div>
+</header>
+<main class="main">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="card" style="margin-bottom:10px;">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% block content %}{% endblock %}
+</main>
+</body>
+</html>
