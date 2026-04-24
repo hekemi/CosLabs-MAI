@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Регистрация нового пользователя</h1>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="hid_inp" value="registration">
+
+    <label>Фамилия</label>
+    <input type="text" name="first_name"  required>
+
+    <label>Имя</label>
+    <input type="text" name="second_name"  required>
+
+    <label>Отчество</label>
+    <input type="text" name="last_name"  required>
+
+    <label>ИНН</label>
+    <input type="number" name="inn"  required>
+
+    <button type="submit">Зарегистрироваться</button>
+</form>
+{%if not fl_inn%}
+    <p>Пользователь с таким ИНН уже существует</p>
+{%endif%}
+
+<h1>Проверка ИНН</h1>
+<form method="GET">
+    {% csrf_token %}
+    <input type="hidden" name="hid_inp" value="get_user">
+    <label>Введите ИНН</label>
+    <input type="number" name="inn"  required>
+    <button type="submit">Найти</button>
+</form>
+
+{% if cur_user%}
+    <h2>Найденное точное совпадение:</h2>
+<h3>
+        {{cur_user.first_name}}
+        {{cur_user.second_name}}
+        {{cur_user.last_name}}
+        {{cur_user.inn}}
+</h3>
+{% endif %}
+
+{% if chech_list_mb_user%}
+<h2>Найденные не точные но входящие совпадения</h2>
+
+<table border="1">
+    <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>ИНН</th>
+    </tr>
+    {%for c in list_mb_user%}
+        <tr>
+
+                <th>{{c.first_name}}</th>
+                <th>{{c.second_name}}</th>
+                <th>{{c.last_name}}</th>
+                <th>{{c.inn}}</th>
+        </tr>
+    {%endfor%}
+</table>
+
+{% endif %}
+
+
+<h1>Список зарегистрированных пользователей</h1>
+
+<table border="1">
+    <tr>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>ИНН</th>
+    </tr>
+    {%for c in client_all%}
+        <tr>
+
+                <th>{{c.first_name}}</th>
+                <th>{{c.second_name}}</th>
+                <th>{{c.last_name}}</th>
+                <th>{{c.inn}}</th>
+
+        </tr>
+    {%endfor%}
+</table>
+
+
+</body>
+</html>
