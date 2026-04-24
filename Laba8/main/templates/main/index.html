@@ -62,43 +62,57 @@
         </div>
     </section>
 
-    <form action="" method="get">
-        <div>
-            <label>LowBlue</label>
-            <input type="number" name="lowblue" value="{{ lowblue }}">
+    <form action="" method="get" class="filters-form">
+        <div class="filters-grid">
+            <div class="filter-item">
+                <label for="id_lowblue">LowBlue</label>
+                <input id="id_lowblue" type="number" name="lowblue" value="{{ lowblue }}">
+            </div>
 
-            <label>HighBlue</label>
-            <input type="number" name="highblue" value="{{ highblue }}">
+            <div class="filter-item">
+                <label for="id_highblue">HighBlue</label>
+                <input id="id_highblue" type="number" name="highblue" value="{{ highblue }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_lowgreen">LowGreen</label>
+                <input id="id_lowgreen" type="number" name="lowgreen" value="{{ lowgreen }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_highgreen">HighGreen</label>
+                <input id="id_highgreen" type="number" name="highgreen" value="{{ highgreen }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_loworange">LowOrange</label>
+                <input id="id_loworange" type="number" name="loworange" value="{{ loworange }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_highorange">HighOrange</label>
+                <input id="id_highorange" type="number" name="highorange" value="{{ highorange }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_lowred">LowRed</label>
+                <input id="id_lowred" type="number" name="lowred" value="{{ lowred }}">
+            </div>
+
+            <div class="filter-item">
+                <label for="id_highred">HighRed</label>
+                <input id="id_highred" type="number" name="highred" value="{{ highred }}">
+            </div>
+
+            <div class="filter-item filter-item--wide">
+                <label for="id_multiplicity">Проверка на кратность</label>
+                <input id="id_multiplicity" type="number" name="multiplicity" value="{{ multiplicity }}">
+            </div>
         </div>
 
-        <div>
-            <label>LowGreen</label>
-            <input type="number" name="lowgreen" value="{{ lowgreen }}">
-
-            <label>HighGreen</label>
-            <input type="number" name="highgreen" value="{{ highgreen }}">
+        <div class="filters-actions">
+            <button type="submit">Печать</button>
         </div>
-
-        <div>
-            <label>LowOrange</label>
-            <input type="number" name="loworange" value="{{ loworange }}">
-
-            <label>HighOrange</label>
-            <input type="number" name="highorange" value="{{ highorange }}">
-        </div>
-
-        <div>
-            <label>LowRed</label>
-            <input type="number" name="lowred" value="{{ lowred }}">
-
-            <label>HighRed</label>
-            <input type="number" name="highred" value="{{ highred }}">
-        </div>
-
-        <label>Проверка на кратность</label>
-        <input type="number" name="multiplicity" value="{{ multiplicity }}">
-
-        <button type="submit">Печать</button>
     </form>
 </div>
 </body>
