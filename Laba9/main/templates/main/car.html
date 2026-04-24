@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Марка</th>
+            <th>Гос знак</th>
+            <th>Год выпуска</th>
+            <th>Расход топлива на км</th>
+            <th>Пробег</th>
+        </tr>
+        {% for c in cars%}
+            <tr>
+                <th>{{c.pk}}</th>
+                <th>{{c.marks}}</th>
+                <th>{{c.number}}</th>
+                <th>{{c.yers_relize}}</th>
+                <th>{{c.fuel_consumption}}</th>
+                <th>{{c.mileage}}</th>
+            </tr>
+
+        {% endfor%}
+    </table>
+
+<h1>Добавить машину</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+
+
+</body>
+</html>

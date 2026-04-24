@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button><a href="{% url 'car' %}">Автомобили</a></button>
+<button><a href="{% url 'driver' %}">Водители</a></button>
+<button><a href="{% url 'trip' %}">Поездки</a></button>
+
+<img src="{% static 'main/gh/graph_mil.png' %}">
+<img src="{% static 'main/gh/graph_name.png' %}">
+
+</body>
+</html>

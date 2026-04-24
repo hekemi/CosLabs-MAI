@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Водитель</th>
+        <th>Авто</th>
+        <th>Время выезда</th>
+        <th>Время прибытия</th>
+        <th>Рассояние</th>
+        <th>Потраченное топрливо</th>
+    </tr>
+    {% for t in trips %}
+        <tr>
+            <th>{{t.pk}}</th>
+            <th>{{t.driver.name}}</th>
+            <th>{{t.car.marks }}</th>
+            <th>{{t.date_out}}</th>
+            <th>{{t.date_in}}</th>
+            <th>{{t.distance }}</th>
+            <th>{{t.fuel }}</th>
+        </tr>
+    {% endfor %}
+</table>
+
+<h1>Добавить поездку</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.driver.label_tag }} {{ form.driver }}
+    {{ form.car.label_tag }} {{ form.car }}
+    {{ form.date_out.label_tag }} {{ form.date_out }}
+    {{ form.date_in.label_tag }} {{ form.date_in }}
+    {{ form.start_km.label_tag }} {{ form.start_km }}
+    {{ form.end_km.label_tag }} {{ form.end_km }}
+
+    <label>Пройденное расстояние</label>
+    <input type="number" id="distance" readonly>
+
+    <button type="submit">Добавить поездку</button>
+</form>
+
+<script>
+const start = document.getElementById('id_start_km');
+const end = document.getElementById('id_end_km');
+const distance = document.getElementById('distance');
+
+function updateDistance() {
+    const s = parseFloat(start.value) || 0;
+    const e = parseFloat(end.value) || 0;
+    distance.value = e - s;
+}
+
+start.addEventListener('input', updateDistance);
+end.addEventListener('input', updateDistance);
+</script>
+
+</body>
+</html>

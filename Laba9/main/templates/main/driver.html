@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Пробег на всех автомобилях</th>
+    </tr>
+    {% for d in drivers %}
+        <tr>
+            <th>{{d.pk}}</th>
+            <th>{{d.name}}</th>
+            <th>{{d.total_distance|default:0 }}</th>
+        </tr>
+    {% endfor %}
+</table>
+
+<h1>Добавить водителя</h1>
+<form method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+
+</body>
+</html>
