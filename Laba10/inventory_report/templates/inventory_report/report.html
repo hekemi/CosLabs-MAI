@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Остатки товаров</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 24px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f5f5f5; }
+        .total { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Отчет «Остатки товаров»</h1>
+
+    <form method="get">
+        {{ form.report_date.label_tag }}
+        {{ form.report_date }}
+        <button type="submit">Сформировать</button>
+    </form>
+
+    {% if report_date %}
+        <p>Дата отчета: {{ report_date }}</p>
+    {% endif %}
+
+    {% if rows %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Название товара</th>
+                    <th>Общее количество</th>
+                    <th>Стоимость</th>
+                    <th>Дата завоза</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        <td>{{ row.product__name }}</td>
+                        <td>{{ row.total_quantity }}</td>
+                        <td>{{ row.total_cost }}</td>
+                        <td>{{ row.last_delivery_date }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="total">
+                    <td colspan="2">Общая сумма</td>
+                    <td>{{ grand_total }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нет данных для выбранной даты.</p>
+    {% endif %}
+</body>
+</html>
