@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Остатки товаров</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+<div class="wrap">
+    <section class="hero">
+        <div class="eyebrow">Laba10</div>
+        <h1>Отчет «Остатки товаров»</h1>
+        <p class="subtitle">Перечень товаров с общим количеством и стоимостью на заданную дату.</p>
+    </section>
+
+    <section class="panel">
+        <div class="panel-head">
+            <strong>На дату: {{ report_date }}</strong>
+            <strong>Общая сумма: {{ grand_total }}</strong>
+        </div>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Товар</th>
+                    <th>Общее количество</th>
+                    <th>Общая стоимость</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for r in rows %}
+                    <tr>
+                        <td>{{ r.product_name }}</td>
+                        <td>{{ r.total_quantity }}</td>
+                        <td>{{ r.total_value }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3" class="empty">Нет данных на выбранную дату.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <form method="get" class="filters-form panel">
+        <div class="panel-head"><strong>Фильтр отчета</strong></div>
+        <div style="padding:12px;">
+            <label for="date">Дата отчета</label>
+            <input type="date" id="date" name="date" value="{{ report_date|date:'Y-m-d' }}">
+            <div class="filters-actions">
+                <button type="submit">Показать</button>
+            </div>
+        </div>
+    </form>
+
+    <form method="post" class="panel">
+        {% csrf_token %}
+        <div class="panel-head"><strong>Добавить запись о завозе</strong></div>
+        <div style="padding:12px;">
+            {{ form.as_p }}
+            <button type="submit">Сохранить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
