@@ -8,36 +8,40 @@
 </head>
 <body>
 <div class="wrap">
-    <section class="hero">
+    <section class="hero full-width-block">
         <div class="eyebrow">Laba10</div>
         <h1>Отчет «Остатки товаров»</h1>
-        <p class="subtitle">Перечень товаров с общим количеством и стоимостью на заданную дату.</p>
+        <p class="subtitle">Перечень товаров на заданную дату.</p>
     </section>
 
-    <section class="panel">
+    <section class="panel full-width-block">
         <div class="panel-head">
             <strong>На дату: {{ report_date }}</strong>
             <strong>Общая сумма: {{ grand_total }}</strong>
         </div>
         <div class="table-wrap">
-            <table>
+            <table class="table--full">
                 <thead>
                 <tr>
                     <th>Товар</th>
-                    <th>Общее количество</th>
-                    <th>Общая стоимость</th>
+                    <th>Кол-во</th>
+                    <th>Цена за штуку</th>
+                    <th>Стоимость</th>
+                    <th>Дата завоза</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for r in rows %}
+                {% for r in entries %}
                     <tr>
                         <td>{{ r.product_name }}</td>
-                        <td>{{ r.total_quantity }}</td>
-                        <td>{{ r.total_value }}</td>
+                        <td>{{ r.quantity }}</td>
+                        <td>{{ r.unit_price }}</td>
+                        <td>{{ r.total_cost }}</td>
+                        <td>{{ r.arrival_date|date:"d.m.Y" }}</td>
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="3" class="empty">Нет данных на выбранную дату.</td>
+                        <td colspan="5" class="empty">Нет данных на выбранную дату.</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -45,7 +49,7 @@
         </div>
     </section>
 
-    <form method="get" class="filters-form panel">
+    <form method="get" class="filters-form panel full-width-block">
         <div class="panel-head"><strong>Фильтр отчета</strong></div>
         <div style="padding:12px;">
             <label for="date">Дата отчета</label>
@@ -56,7 +60,7 @@
         </div>
     </form>
 
-    <form method="post" class="panel">
+    <form method="post" class="panel full-width-block">
         {% csrf_token %}
         <div class="panel-head"><strong>Добавить запись о завозе</strong></div>
         <div style="padding:12px;">

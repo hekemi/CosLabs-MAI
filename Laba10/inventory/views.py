@@ -20,22 +20,16 @@ def stock_report(request):
     except ValueError:
         report_date = date.today()
 
-    qs = ProductStock.objects.filter(arrival_date__lte=report_date)
-
-    rows = (
-        qs.values("product_name")
-        .annotate(total_quantity=Sum("quantity"), total_value=Sum("total_cost"))
-        .order_by("product_name")
-    )
-
-    grand_total = rows.aggregate(total=Sum("total_value"))["total"] or 0
+    # Детализация по товарам/завозам на выбранную дату
+    entries = ProductStock.objects.filter(arrival_date__lte=report_date).order_by("product_name", "arrival_date")
+    grand_total = entries.aggregate(total=Sum("total_cost"))["total"] or 0
 
     return render(
         request,
         "inventory/report.html",
         {
             "form": form,
-            "rows": rows,
+            "entries": entries,
             "report_date": report_date,
             "grand_total": grand_total,
         },
