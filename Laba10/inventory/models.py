@@ -15,7 +15,9 @@ class ProductStock(models.Model):
         ordering = ["-arrival_date", "product_name"]
 
     def save(self, *args, **kwargs):
-        self.total_cost = (Decimal(self.quantity) * self.unit_price).quantize(Decimal("0.01"))
+        qty = Decimal(str(self.quantity or 0))
+        price = Decimal(str(self.unit_price or 0))
+        self.total_cost = (qty * price).quantize(Decimal("0.01"))
         super().save(*args, **kwargs)
 
     def __str__(self):
