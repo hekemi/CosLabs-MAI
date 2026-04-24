@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Товары</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+</head>
+<body>
+<div class="wrap">
+    <header class="hero">
+        <span class="eyebrow">Lab 8</span>
+        <h1>Каталог товаров</h1>
+        <p class="subtitle">Подсветка цены по диапазонам и проверка кратности.</p>
+    </header>
+
+    <section class="panel">
+        <div class="panel-head">
+            <strong>Список товаров</strong>
+            <div class="chips">
+                <span class="chip">Blue</span>
+                <span class="chip">Green</span>
+                <span class="chip">Orange</span>
+                <span class="chip">Red</span>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                <tr>
+                    <th>Код</th>
+                    <th>Наименование товара</th>
+                    <th>Кратность</th>
+                    <th>Цена</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in prod %}
+                    <tr>
+                        <td>{{ p.code }}</td>
+                        <td>{{ p.name }}</td>
+                        <td {% if multiplicity != '' and p.price|divisibleby:multiplicity %}style="background-color: yellow;"{% endif %}></td>
+                        <td
+                            {% if p.price >= lowred and p.price <= highred %}style="background-color: red;"
+                            {% elif p.price >= loworange and p.price <= highorange %}style="background-color: orange;"
+                            {% elif p.price >= lowgreen and p.price <= highgreen %}style="background-color: green;"
+                            {% elif p.price >= lowblue and p.price <= highblue %}style="background-color: blue;"
+                            {% endif %}
+                        >
+                            {{ p.price }}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="empty">Нет данных</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <form action="" method="get">
+        <div>
+            <label>LowBlue</label>
+            <input type="number" name="lowblue" value="{{ lowblue }}">
+
+            <label>HighBlue</label>
+            <input type="number" name="highblue" value="{{ highblue }}">
+        </div>
+
+        <div>
+            <label>LowGreen</label>
+            <input type="number" name="lowgreen" value="{{ lowgreen }}">
+
+            <label>HighGreen</label>
+            <input type="number" name="highgreen" value="{{ highgreen }}">
+        </div>
+
+        <div>
+            <label>LowOrange</label>
+            <input type="number" name="loworange" value="{{ loworange }}">
+
+            <label>HighOrange</label>
+            <input type="number" name="highorange" value="{{ highorange }}">
+        </div>
+
+        <div>
+            <label>LowRed</label>
+            <input type="number" name="lowred" value="{{ lowred }}">
+
+            <label>HighRed</label>
+            <input type="number" name="highred" value="{{ highred }}">
+        </div>
+
+        <label>Проверка на кратность</label>
+        <input type="number" name="multiplicity" value="{{ multiplicity }}">
+
+        <button type="submit">Печать</button>
+    </form>
+</div>
+</body>
+</html>
