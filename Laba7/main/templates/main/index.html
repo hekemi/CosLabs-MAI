@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
 <body>
 
@@ -42,10 +44,10 @@
 {% if cur_user%}
     <h2>Найденное точное совпадение:</h2>
 <h3>
-        {{cur_user.first_name}}
-        {{cur_user.second_name}}
-        {{cur_user.last_name}}
-        {{cur_user.inn}}
+        {{ cur_user.first_name }}
+        {{ cur_user.second_name }}
+        {{ cur_user.last_name }}
+        {{ cur_user.inn }}
 </h3>
 {% endif %}
 
@@ -59,19 +61,16 @@
         <th>Отчество</th>
         <th>ИНН</th>
     </tr>
-    {%for c in list_mb_user%}
+    {% for c in list_mb_user %}
         <tr>
-
-                <th>{{c.first_name}}</th>
-                <th>{{c.second_name}}</th>
-                <th>{{c.last_name}}</th>
-                <th>{{c.inn}}</th>
+            <th>{{ c.first_name }}</th>
+            <th>{{ c.second_name }}</th>
+            <th>{{ c.last_name }}</th>
+            <th>{{ c.inn }}</th>
         </tr>
-    {%endfor%}
+    {% endfor %}
 </table>
-
 {% endif %}
-
 
 <h1>Список зарегистрированных пользователей</h1>
 
@@ -82,18 +81,15 @@
         <th>Отчество</th>
         <th>ИНН</th>
     </tr>
-    {%for c in client_all%}
+    {% for c in client_all %}
         <tr>
-
-                <th>{{c.first_name}}</th>
-                <th>{{c.second_name}}</th>
-                <th>{{c.last_name}}</th>
-                <th>{{c.inn}}</th>
-
+            <th>{{ c.first_name }}</th>
+            <th>{{ c.second_name }}</th>
+            <th>{{ c.last_name }}</th>
+            <th>{{ c.inn }}</th>
         </tr>
-    {%endfor%}
+    {% endfor %}
 </table>
-
 
 </body>
 </html>
