@@ -1,40 +1,53 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Автомобили</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
 <body>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Марка</th>
-            <th>Гос знак</th>
-            <th>Год выпуска</th>
-            <th>Расход топлива на км</th>
-            <th>Пробег</th>
-        </tr>
-        {% for c in cars%}
-            <tr>
-                <th>{{c.pk}}</th>
-                <th>{{c.marks}}</th>
-                <th>{{c.number}}</th>
-                <th>{{c.yers_relize}}</th>
-                <th>{{c.fuel_consumption}}</th>
-                <th>{{c.mileage}}</th>
-            </tr>
+<div class="wrap">
+    <section class="hero">
+        <span class="eyebrow">Справочник</span>
+        <h1>Автомобили</h1>
+    </section>
 
-        {% endfor%}
-    </table>
+    <section class="panel">
+        <div class="panel-head">
+            <strong>Список автомобилей</strong>
+        </div>
 
-<h1>Добавить машину</h1>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Марка</th>
+                    <th>Гос знак</th>
+                    <th>Год выпуска</th>
+                    <th>Расход топлива на км</th>
+                    <th>Пробег</th>
+                </tr>
+                {% for c in cars %}
+                    <tr>
+                        <th>{{ c.pk }}</th>
+                        <th>{{ c.marks }}</th>
+                        <th>{{ c.number }}</th>
+                        <th>{{ c.yers_relize }}</th>
+                        <th>{{ c.fuel_consumption }}</th>
+                        <th>{{ c.mileage }}</th>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Добавить</button>
-</form>
-
-
+    <h1>Добавить машину</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
 </body>
 </html>

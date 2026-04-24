@@ -1,17 +1,35 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
 <body>
-<button><a href="{% url 'car' %}">Автомобили</a></button>
-<button><a href="{% url 'driver' %}">Водители</a></button>
-<button><a href="{% url 'trip' %}">Поездки</a></button>
+<div class="wrap">
+    <section class="hero">
+        <span class="eyebrow">Laba 9</span>
+        <h1>Учет автопарка</h1>
+        <p class="subtitle">Переход к разделам и визуализация данных.</p>
+    </section>
 
-<img src="{% static 'main/gh/graph_mil.png' %}">
-<img src="{% static 'main/gh/graph_name.png' %}">
+    <section class="panel">
+        <div class="panel-head">
+            <strong>Навигация</strong>
+        </div>
 
+        <div style="padding: 12px;">
+            <button><a href="{% url 'car' %}">Автомобили</a></button>
+            <button><a href="{% url 'driver' %}">Водители</a></button>
+            <button><a href="{% url 'trip' %}">Поездки</a></button>
+        </div>
+
+        <div class="table-wrap" style="padding: 12px;">
+            <img src="{% static 'main/gh/graph_mil.png' %}" alt="График пробега">
+            <img src="{% static 'main/gh/graph_name.png' %}" alt="График по именам">
+        </div>
+    </section>
+</div>
 </body>
 </html>

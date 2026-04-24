@@ -1,32 +1,47 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Водители</title>
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
 </head>
 <body>
+<div class="wrap">
+    <section class="hero">
+        <span class="eyebrow">Справочник</span>
+        <h1>Водители</h1>
+    </section>
 
-<table border="1">
-    <tr>
-        <th>Id</th>
-        <th>Имя</th>
-        <th>Пробег на всех автомобилях</th>
-    </tr>
-    {% for d in drivers %}
-        <tr>
-            <th>{{d.pk}}</th>
-            <th>{{d.name}}</th>
-            <th>{{d.total_distance|default:0 }}</th>
-        </tr>
-    {% endfor %}
-</table>
+    <section class="panel">
+        <div class="panel-head">
+            <strong>Список водителей</strong>
+        </div>
 
-<h1>Добавить водителя</h1>
-<form method="post" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Добавить</button>
-</form>
+        <div class="table-wrap">
+            <table>
+                <tr>
+                    <th>Id</th>
+                    <th>Имя</th>
+                    <th>Пробег на всех автомобилях</th>
+                </tr>
+                {% for d in drivers %}
+                    <tr>
+                        <th>{{ d.pk }}</th>
+                        <th>{{ d.name }}</th>
+                        <th>{{ d.total_distance|default:0 }}</th>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
 
+    <h1>Добавить водителя</h1>
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
+</div>
 </body>
 </html>
