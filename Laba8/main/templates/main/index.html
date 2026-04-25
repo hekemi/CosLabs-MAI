@@ -35,7 +35,15 @@
                     <tr>
                         <td>{{ p.code }}</td>
                         <td>{{ p.name }}</td>
-                        <td {% if multiplicity != '' and p.price|divisibleby:multiplicity %}style="background-color: yellow;"{% endif %}></td>
+
+                        <td class="multiplicity-cell">
+                            {% if multiplicity != '' and p.price|divisibleby:multiplicity %}
+                                <span class="multi-badge multi-badge--ok" title="Кратно">✓</span>
+                            {% else %}
+                                <span class="multi-badge multi-badge--off" title="Не кратно">—</span>
+                            {% endif %}
+                        </td>
+
                         <td
                             {% if p.price >= lowred and p.price <= highred %}style="background-color: red;"
                             {% elif p.price >= loworange and p.price <= highorange %}style="background-color: orange;"
